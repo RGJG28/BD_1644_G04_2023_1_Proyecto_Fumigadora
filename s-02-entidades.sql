@@ -71,20 +71,14 @@ CREATE TABLE EMPLEADO(
     sucursal_id         number(2,0)     not null,
     departamento_id     number(2,0)     not null constraint empleado_departamento_id_uk unique,
     empleadogeren_id    number(3,0)     not null,
-    es_vendedor         numeric(1,0)     not null,
-    es_tecnico          numeric(1,0)     not null,
-    es_mecanico         numeric(1,0)     not null,
+    tipo_empleado       varchar2(1)     not null,
     constraint empleado_pk primary key (empleado_id),
     constraint empleado_sucursal_id_departamento_id_fk foreign key(sucursal_id,departamento_id) 
       references departamento(sucursal_id,departamento_id),
     constraint empleado_sucursal_id_departamento_id_uk UNIQUE(sucursal_id,departamento_id),
     constraint empleado_empleadogeren_id_fk foreign key(empleadogeren_id)
       references empleado(empleado_id),
-    constraint empleado_es_chk check(
-      (es_vendedor in (1) and es_tecnico in (0) and es_mecanico in (0)) or
-      (es_vendedor in (0) and es_tecnico in (1) and es_mecanico in (0)) or
-      (es_vendedor in (0) and es_tecnico in (0) and es_mecanico in (1))
-    )
+    constraint empleado_tipo_empleado_chk (tipo_empleado in ('V','M','T'));
 );
 
 -------------------------------------------------------------------------------------------------------------
