@@ -78,7 +78,7 @@ CREATE TABLE EMPLEADO(
     constraint empleado_sucursal_id_departamento_id_uk UNIQUE(sucursal_id,departamento_id),
     constraint empleado_empleadogeren_id_fk foreign key(empleadogeren_id)
       references empleado(empleado_id),
-    constraint empleado_tipo_empleado_chk (tipo_empleado in ('V','M','T'));
+    constraint empleado_tipo_empleado_chk (tipo_empleado in ('V','M','T'))
 );
 
 -------------------------------------------------------------------------------------------------------------
@@ -239,14 +239,10 @@ CREATE TABLE CLIENTE(
    alcaldiac          varchar2(20)     not null,
    cpc                varchar2(5)      not null,
    forma_pago         varchar2(10)     not null,
-   es_empresa         numeric(1,0)     not null,
-   es_persona         numeric(1,0)     not null,
+   tipo_cliente       varchar2(1)      not null,
    constraint cliente_pk primary key (cliente_id),
-   constraint cliente_forma_pago_ck check (forma_pago in('EFECTIVO', 'TARJETA')),
-   constraint cliente_es_chk check(
-    (es_empresa in (1) and es_persona in (0)) or
-    (es_empresa in (0) and es_persona in (1))
-   )
+   constraint cliente_forma_pago_chk check (forma_pago in('EFECTIVO', 'TARJETA')),
+   constraint cliente_tipo_cliente_chk check (tipo_cliente in ('E', 'P'))
 );
 
 -------------------------------------------------------------------------------------------------------------
